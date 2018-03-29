@@ -29,7 +29,9 @@
 \usepackage[pdftex]{graphicx}
 \graphicspath{{../pdf/}{../jpeg/}}
 \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
-
+\usepackage[portuguese,algoruled,longend]{algorithm2e}
+\usepackage[utf8]{inputenc}
+\usepackage[brazilian]{babel}
 \usepackage[cmex10]{amsmath}
 %Mathabx do not work on ScribTex => Removed
 %\usepackage{mathabx}
@@ -47,12 +49,10 @@
 %=== TITLE & AUTHORS ====================================================================
 \begin{document}
 \bstctlcite{IEEEexample:BSTcontrol}
-    \title{High-Efficiency Harmonically-Terminated Diode and Transistor Rectifiers}
-  \author{Michael~Roberg,~\IEEEmembership{Student Member,~IEEE,}
-      Tibault~Reveyrand,~\IEEEmembership{Member,~IEEE,}\\
-      Ignacio~Ramos,~\IEEEmembership{Student Member,~IEEE,}
-      Erez Falkenstein,~\IEEEmembership{Student Member,~IEEE,}
-      and~Zoya~Popovi\'c,~\IEEEmembership{Fellow,~IEEE}% <-this % stops a space
+    \title{Experimento 1 – Analise de circuitos no domínio da frequência }
+  \author{Felipe~Alcântara,~\IEEEmembership{Student Member,~IEEE,}
+      and~~Tales~Mauricio,~\IEEEmembership{Member,~IEEE,}\\
+      % <-this % stops a space
 
   \thanks{Manuscript received July 10, 2012. \hl{This paper is an expanded paper from the IEEE MTT-S Int. Microwave Symposium held on June 17-22, 2012 in Montreal, Canada.} This work was funded in part by the Office of Naval Research under the Defense Advanced Research Projects Agency (DARPA) Microscale Power Conversion (MPC) Program under Grant N00014-11-1-0931, and in part by the Advanced Research Projects Agency-Energy (ARPA-E), U.S. Department of Energy, under Award Number DE-AR0000216.}
   \thanks{M. Roberg is with TriQuint Semiconductor, 500 West Renner Road Richardson, TX 75080 USA (e-mail: michael.roberg@tqs.com).}% <-this % stops a space
@@ -63,12 +63,11 @@ Boulder, CO 80301 USA (e-mail: erez.falkenstein@gmail.com).}}
 
 
 % The paper headers
-\markboth{IEEE TRANSACTIONS ON MICROWAVE THEORY AND TECHNIQUES, VOL.~60, NO.~12, DECEMBER~2012
-}{Roberg \MakeLowercase{\textit{et al.}}: High-Efficiency Diode and Transistor Rectifiers}
+
 
 
 % ====================================================================
-\maketitle
+\maketitle 
 
 
 
@@ -118,14 +117,14 @@ This paper presents a theoretical analysis of harmonically-terminated high-effic
 
 % === I. INTRODUCTION =============================================================
 % =================================================================================
-\section{Introduction}
+\section{Introdução}
 
-\IEEEPARstart{T}{he} first RF rectifiers were demonstrated in experiments and patents in the 1890's by Nikola Tesla in wireless power transmission for lighting applications and the method of obtaining direct from alternating current \cite{tesla}. The main application of microwave power rectifiers in the early 1900's was in signal detection where crystals, vacuum tubes or diodes served as the nonlinear element \cite{early_rect1,early_rect2}.  An excellent discussion of the early history of microwave detectors is provided in \cite{converter_history}.  These early microwave rectifiers were aimed at extracting information rather than extracting DC power.  The first published application of microwave rectifiers for extraction of DC power was performed in the 1960's using diode-based rectifiers  \cite{purdue_rect,brown_rect1,brown_rect2,nasa_report1}.
+\IEEEPARstart{E}{ste} documento apresenta o relatório  do segundo experimento, da matéria Prática de Circuitos Eletrônicos. Esta atividade teve o objetivo realizar a análise de circuitos no domínio da frequência.
 
-Renewed interest in free-space power transmission occurred in the early 1970's. An interesting microwave rectifier for production of DC power or low-frequency AC power called the Cyclotron-Wave Rectifier was introduced in \cite{cyclotron_rect1,cyclotron_rect2}. William C. Brown of Raytheon, one of the original researchers in the field, continued publishing diode-based rectifier work and introduced the term ``rectenna'' for a receiving antenna integrated with a rectifier \cite{brown1_1970,brown3_1970,brown}.  Around the same time,  power combining for an array of microwave power rectifiers was discussed in \cite{rect_power_combine}, in which the authors inadvertently graze the topic of harmonically terminated rectifiers, of which they seem to hint at a class-F rectifier.
-\begin{shaded}
+
+
 A number of diode-based rectifiers have been demonstrated, many integrated with antennas, with a good comparison presented in \cite{erezMTT2012}  and in earlier works focusing on low-power rectification \cite{hagerty}, \cite{erez_thesis}. Additional applications where rectifier efficiency is important include microwave power recycling \cite{asbeck}, and DC-DC converters with extremely high frequency switching \cite{4500dcdc,JoseIMS-rect}. In many of the reported microwave rectifiers, filtering of the harmonics at both the input and output has been investigated, e.g \cite{rectifier_harmonic_generation},\cite{low_cost_rectenna}, mainly to reduce re-radiated harmonic power. To date, very few transistor rectifier circuits have been demonstrated, most at frequencies at least three times lower than in this work.  A UHF synchronous transistor class-E rectifier at 700\,MHz is shown to achieve 85\% efficiency with 58\,mW of output power in \cite{JoseIMS-rect}, and the same authors discuss a class-E$^2$ 10-W DC-DC converter with a synchrounous transistor rectifier at 780\,MHz with 72\% efficiency \cite{Jose-DC-DC-IMS}. This design is scaled from 0.5-MHz synchronous rectifier designs demonstrated in \cite{Kaz} and requires an additional synchronized gate RF input signal.
-\end{shaded}
+
 Harmonic terminations are commonly applied to increase efficiency in power amplifiers (PAs). The transistor nonlinearities generate harmonic content at the output, and in a number of high-efficiency amplifier classes, specific harmonic terminations are used to shape the current and voltage waveforms. In reduced conduction angle PAs (classes A, AB, B and C), all harmonics are shorted at the virtual drain reference plane in the transistor. Other PA modes of operation specify open or short harmonic terminations for various harmonics \cite{raab01_finiteharmonics, raab02_PAoverview, kee_rutledge}. A general analysis for arbitrary complex terminations of harmonics have recently been derived in \cite{roberg2011}, including a sensitivity analysis to harmonic termination impedances. In a rectifier, the nonlinear rectifying element also generates currents and voltages at the harmonics of the input frequency, and although in this case the output is at DC, the efficiency of the rectifier can be modified by terminating the harmonics. In \cite{robergIMS2012} the harmonic termination concept for improving rectifier efficiency is applied to a class-C diode rectifier integrated with a dual-polarized patch antenna for a wireless powering application.
 
 In this paper, we identify the similarity between power rectifiers and power amplifiers, showing that many of the efficiency improvement techniques developed for power amplifiers may be practically directly applied to power rectifiers. Particularly, the impact which harmonic terminations have on the rectification efficiency is addressed. A general rectifier analysis approach is presented in Section II, and several classes of microwave power rectifiers are introduced, focusing on class-C and F$^{\rm -1}$ modes, which are experimentally validated in Sections III and IV.
@@ -133,9 +132,13 @@ In this paper, we identify the similarity between power rectifiers and power amp
 
 % === II. Harmonically-Terminated Power Rectifier Analysis ========================
 % =================================================================================
-\section{Harmonically-Terminated Power Rectifier Analysis}
+\section{}
 
-
+\begin{figure}
+	\begin{center}
+	\includegraphics[scale=0.5]{PDF/123.png}
+	\end{center}
+\end{figure}
 % =======
 % FIG. 01
 % =======
